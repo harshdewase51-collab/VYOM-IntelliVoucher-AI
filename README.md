@@ -1,9 +1,5 @@
 # VYOM+ IntelliVoucher AI
 
-### Evidence-Backed, Explainable and Uncertainty-Aware Accounting Voucher Classification using Open-Source AI
-
----
-
 ## 1. Project Name
 
 **VYOM+ IntelliVoucher AI**
@@ -597,18 +593,3 @@ Exact versions, licenses and model configurations will be documented during the 
 | Model latency | Quantization and optimized inference |
 | Category imbalance | Per-category metrics and error analysis |
 | Misclassification | Confusion matrix and systematic error analysis |
-
-### Evaluation Strategy
-
-The system will be evaluated using:
-
-- **Accuracy**
-- **Precision**
-- **Recall**
-- **F1-score**
-- **Per-category performance**
-- **Ambiguous-case performance**
-- **Confusion matrix**
-- **Inference time**
-
-The evaluation will be performed on previously unseen records wherever the provided dataset permits, enabling reproducible assessment of the classifier.
