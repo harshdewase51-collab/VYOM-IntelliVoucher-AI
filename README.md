@@ -1,260 +1,419 @@
-# VYOM-IntelliVoucher-AI
-1. Project Name
-VYOM+ IntelliVoucher AI
+# VYOM+ IntelliVoucher AI
+
+### Evidence-Backed, Explainable and Uncertainty-Aware Accounting Voucher Classification using Open-Source AI
+
+---
+
+## 1. Project Name
+
+**VYOM+ IntelliVoucher AI**
+
 An open-source AI-powered system for context-aware, explainable and reliable accounting voucher classification.
-2. Problem Statement
-Financial transactions contain multiple interconnected attributes such as:
-- Seller / Supplier
-- Buyer / Customer
-- Invoice details
-- Item descriptions
-- Quantity and value
-- GST and tax information
-- Discounts and freight
-- Payment information
-- Return information
-- Order and delivery references
-- Import / Export information
-Determining the correct accounting voucher type from these fields requires understanding the overall transaction context rather than relying on individual keywords.
-The system aims to automatically classify each transaction into the appropriate voucher category using an open-source/open-weight LLM, while handling incomplete or ambiguous information. This directly follows the core technical challenge specified by VYOM+. Hacktober_Fest_4_Problem_Statem… Hacktober_Fest_4_Problem_Statem…
-3. Project Overview
-VYOM+ IntelliVoucher AI is an AI-based transaction intelligence system that converts structured financial transaction data into appropriate accounting voucher classifications.
+
+---
+
+## 2. Problem Statement
+
+Financial transactions contain multiple interconnected attributes such as seller, buyer, invoice details, item descriptions, quantities, GST, payment information, returns, orders and other transaction metadata.
+
+Correctly identifying the appropriate accounting voucher type requires understanding the complete transaction context rather than relying on individual keywords.
+
+VYOM+ IntelliVoucher AI aims to automatically classify structured financial transactions into the appropriate voucher category using an open-source/open-weight LLM while handling incomplete and ambiguous transaction information.
+
+---
+
+## 3. Project Overview
+
+VYOM+ IntelliVoucher AI is a transaction intelligence system that processes structured financial transaction data from Excel and predicts the appropriate accounting voucher category.
+
 The system combines:
-- Structured data preprocessing
-- Multi-field transaction understanding
+
+- Structured transaction preprocessing
+- Multi-field contextual understanding
 - Open-source LLM reasoning
 - Voucher classification
 - Evidence extraction
 - Confidence estimation
-- Validation
+- Ambiguity detection
+- Output validation
 - Human review for uncertain cases
 - Quantitative evaluation
-Core Workflow
-Transaction Dataset
-        ↓
-Data Preprocessing
-        ↓
-Transaction Context Builder
-        ↓
-Open-Source LLM
-        ↓
-Contextual Reasoning
-        ↓
-Voucher Classification
-        ↓
-Evidence + Confidence
-        ↓
-Validation
-        ↓
-Auto Classification / Human Review
 
-4. Proposed Solution
-We propose a context-aware voucher intelligence pipeline that analyzes the complete transaction record before predicting a voucher category.
-Instead of directly asking an LLM to classify a row, the system will:
-1. Normalize and validate transaction fields.
-2. Build a structured representation of the transaction.
-3. Analyze relationships between relevant fields.
-4. Generate the most appropriate voucher category.
-5. Identify the transaction fields supporting the prediction.
-6. Estimate prediction confidence.
-7. Detect ambiguous or conflicting cases.
-8. Route low-confidence cases for human verification.
-9. Produce structured machine-readable output.
-This approach addresses the requirement to reason over multiple transaction fields and distinguish semantically similar voucher categories. Hacktober_Fest_4_Problem_Statem…
-5. Objectives
-Primary Objectives
-- Automate accounting voucher classification from structured transaction data.
-- Understand relationships between multiple transaction fields.
-- Use an open-source/open-weight LLM as the primary intelligence layer.
-- Distinguish semantically similar voucher categories.
-- Handle incomplete and ambiguous transaction records.
-- Provide evidence supporting each prediction.
-- Estimate confidence for every classification.
-- Route uncertain transactions for human verification.
-- Generate consistent machine-readable output.
-- Evaluate the system using reproducible classification metrics.
-6. Target Users / Use Case
-Target Users
-- Accounting professionals
-- Finance teams
-- Businesses processing large transaction volumes
-- ERP and accounting software providers
-- Financial automation platforms
-Primary Use Case
-A user uploads an Excel dataset containing structured transaction information.
-The system:
-Upload Dataset
-      ↓
-Process Transactions
-      ↓
-Understand Transaction Context
-      ↓
-Classify Voucher
-      ↓
-Show Evidence & Confidence
-      ↓
-Review Uncertain Cases
-      ↓
-Export Results
-
-7. Open-Source AI Technology Selected
-Qwen2.5-7B-Instruct
-The proposed system will use Qwen2.5-7B-Instruct as its primary open-source/open-weight language model for:
-- Transaction understanding
-- Contextual reasoning
-- Voucher classification
-- Structured output generation
-The final model configuration will be validated according to the computational environment available during implementation.
-The official challenge explicitly permits open-source/openly available LLM/SLM approaches and lists Qwen among suitable model families. Hacktober_Fest_4_Problem_Statem…
-8. Why This Technology Was Selected
-Qwen2.5-7B-Instruct is proposed because the problem requires more than conventional keyword-based classification.
-The model will be used for:
-- Multi-field contextual understanding
-- Instruction following
-- Reasoning over transaction relationships
-- Constrained classification
-- Structured output generation
-The model choice is therefore driven by the reasoning requirements of the problem, rather than simply selecting a popular AI model.
-9. AI's Role in the System
-The AI acts as the primary intelligence layer.
-For each transaction, it will analyze available information such as:
-Seller
-Buyer
-Items
-Amount
-GST
-Payment
-Returns
-Orders
-Import / Export
-Other Metadata
-
-and determine the most appropriate voucher category.
-AI Output
-- Predicted voucher type
-- Supporting evidence
-- Confidence score
-- Review requirement
-The AI will specifically address difficult distinctions such as Purchase vs Sales, Purchase Return vs Sales Return, Payment vs Receipt, Journal vs conventional transactions, and Import vs Export. Hacktober_Fest_4_Problem_Statem…
-## 10. System Architecture
-
-## 10. System Architecture
+### Core Workflow
 
 ```text
 Structured Excel Dataset
           |
           v
-Data Cleaning & Validation
+Data Preprocessing
           |
           v
 Transaction Context Builder
           |
           v
-Qwen2.5-7B-Instruct
-(Contextual Reasoning Engine)
+Open-Source LLM
+          |
+          v
+Contextual Reasoning
           |
           v
 Voucher Classification
           |
           v
-Evidence Extraction
+Evidence + Confidence
           |
           v
-Confidence & Uncertainty Assessment
+Validation
           |
-          +----------------------+
-          |                      |
-          v                      v
-   High Confidence         Low Confidence
-          |                      |
-          v                      v
-   Auto Classification      Human Review
-          |                      |
-          +----------+-----------+
-                     |
-                     v
-          Validation & Output
-              Generation
-                     |
-                     v
-            JSON / CSV Output
+          v
+Auto Classification / Human Review
+          |
+          v
+Structured Output
+```
 
-11. Component-Level Architecture
-Component	Responsibility
-Dataset Processor	Reads and preprocesses Excel transactions
-Data Validator	Identifies missing/invalid fields
-Context Builder	Creates a standardized transaction representation
-LLM Reasoning Engine	Performs contextual transaction analysis
-Classification Engine	Predicts the voucher category
-Evidence Extractor	Identifies supporting transaction fields
-Confidence Engine	Estimates classification certainty
-Conflict Detector	Identifies ambiguous or competing categories
-Validation Layer	Checks output consistency
-Human Review Module	Handles low-confidence cases
-Evaluation Engine	Calculates performance metrics
-Result Interface	Displays and exports predictions
+---
 
+## 4. Proposed Solution
 
-12. Data / Information Flow
+The proposed system will analyze the complete transaction record before determining the appropriate voucher category.
+
+Instead of performing direct keyword-based classification, the system will:
+
+1. Normalize and validate transaction fields.
+2. Build a structured representation of the transaction.
+3. Analyze relationships between multiple transaction fields.
+4. Predict the most appropriate voucher category.
+5. Identify the transaction fields supporting the prediction.
+6. Estimate classification confidence.
+7. Detect ambiguous or competing categories.
+8. Route low-confidence transactions for human verification.
+9. Generate structured machine-readable output.
+
+The approach is designed to distinguish semantically similar categories such as Purchase vs Sales, Purchase Return vs Sales Return, Payment vs Receipt, Journal vs conventional transactions, and Import vs Export.
+
+---
+
+## 5. Objectives
+
+### Primary Objectives
+
+- Automate accounting voucher classification from structured transaction data.
+- Use an open-source/open-weight LLM as the primary intelligence layer.
+- Understand relationships between multiple transaction fields.
+- Distinguish semantically similar voucher categories.
+- Handle incomplete and ambiguous transaction records.
+- Provide evidence supporting each classification.
+- Estimate confidence for every prediction.
+- Identify transactions requiring human verification.
+- Generate consistent machine-readable outputs.
+- Evaluate the system using reproducible classification metrics.
+
+---
+
+## 6. Target Users / Use Case
+
+### Target Users
+
+- Accounting professionals
+- Finance teams
+- Businesses processing large transaction volumes
+- ERP and accounting software providers
+- Financial automation platforms
+
+### Primary Use Case
+
+A user uploads an Excel dataset containing structured transaction information.
+
+The system processes each transaction and generates the appropriate voucher classification.
+
+```text
+Upload Excel Dataset
+        |
+        v
+Process Transactions
+        |
+        v
+Understand Transaction Context
+        |
+        v
+Classify Voucher
+        |
+        v
+Show Evidence + Confidence
+        |
+        v
+Review Uncertain Cases
+        |
+        v
+Export Results
+```
+
+---
+
+## 7. Open-Source AI Technology Selected
+
+### Qwen2.5-7B-Instruct
+
+Qwen2.5-7B-Instruct is proposed as the primary open-source/open-weight language model for:
+
+- Transaction understanding
+- Contextual reasoning
+- Voucher classification
+- Structured output generation
+
+The final model configuration will be validated according to the computational environment available during the final implementation.
+
+---
+
+## 8. Why This Technology Was Selected
+
+The problem requires understanding relationships between multiple transaction fields rather than identifying a single keyword.
+
+The selected model is intended to provide:
+
+- Contextual understanding
+- Instruction following
+- Multi-field reasoning
+- Structured output generation
+- Practical inference requirements
+
+The technology choice is therefore driven by the reasoning requirements of the problem rather than simply selecting a popular model.
+
+---
+
+## 9. AI's Role in the System
+
+The AI model will act as the primary transaction-classification intelligence layer.
+
+For each transaction, it will analyze available information such as:
+
+```text
+Seller / Supplier
+Buyer / Customer
+Invoice Information
+Item Description
+Quantity
+Taxable Value
+GST
+Discount
+Freight
+Payment Information
+Return Information
+Order References
+Import / Export Details
+Other Metadata
+```
+
+The AI will produce:
+
+- Predicted voucher type
+- Supporting evidence
+- Confidence score
+- Alternative category where relevant
+- Human-review requirement for uncertain cases
+
+---
+
+## 10. System Architecture
+
+```text
+                    +--------------------------+
+                    |   Structured Excel      |
+                    |       Dataset            |
+                    +------------+-------------+
+                                 |
+                                 v
+                    +--------------------------+
+                    | Data Cleaning &          |
+                    | Validation               |
+                    +------------+-------------+
+                                 |
+                                 v
+                    +--------------------------+
+                    | Transaction Context     |
+                    | Builder                  |
+                    +------------+-------------+
+                                 |
+                                 v
+                    +--------------------------+
+                    | Qwen2.5-7B-Instruct      |
+                    | Reasoning Engine         |
+                    +------------+-------------+
+                                 |
+                                 v
+                    +--------------------------+
+                    | Voucher Classification   |
+                    +------------+-------------+
+                                 |
+                    +------------+-------------+
+                    |                          |
+                    v                          v
+          +------------------+       +------------------+
+          | Evidence         |       | Alternative      |
+          | Extraction       |       | Category Check   |
+          +--------+---------+       +--------+---------+
+                   |                          |
+                   +------------+-------------+
+                                |
+                                v
+                    +--------------------------+
+                    | Confidence &             |
+                    | Uncertainty Assessment   |
+                    +------------+-------------+
+                                 |
+                    +------------+-------------+
+                    |                          |
+                    v                          v
+          +------------------+       +------------------+
+          | High Confidence  |       | Low Confidence  |
+          | Auto-Classification|     | Human Review    |
+          +--------+---------+       +--------+---------+
+                   |                          |
+                   +------------+-------------+
+                                |
+                                v
+                    +--------------------------+
+                    | Validation & Structured  |
+                    | Output Generation        |
+                    +------------+-------------+
+                                 |
+                                 v
+                    +--------------------------+
+                    | JSON / CSV / Dashboard   |
+                    +--------------------------+
+```
+
+---
+
+## 11. Component-Level Architecture
+
+| Component | Responsibility |
+|---|---|
+| Dataset Processor | Reads and preprocesses Excel transactions |
+| Data Validator | Identifies missing or invalid fields |
+| Context Builder | Creates a standardized transaction representation |
+| LLM Reasoning Engine | Performs contextual transaction analysis |
+| Classification Engine | Predicts the voucher category |
+| Evidence Extractor | Identifies supporting transaction fields |
+| Confidence Engine | Estimates classification certainty |
+| Conflict Detector | Identifies ambiguous or competing categories |
+| Validation Layer | Checks output consistency |
+| Human Review Module | Handles low-confidence cases |
+| Evaluation Engine | Calculates performance metrics |
+| Result Interface | Displays and exports predictions |
+
+---
+
+## 12. Data / Information Flow
+
+```text
 Excel Dataset
-     ↓
+      |
+      v
 Read Transaction
-     ↓
+      |
+      v
 Clean & Normalize
-     ↓
+      |
+      v
 Validate Available Fields
-     ↓
+      |
+      v
 Build Transaction Context
-     ↓
+      |
+      v
 LLM Reasoning
-     ↓
+      |
+      v
 Predict Voucher Type
-     ↓
+      |
+      v
 Extract Supporting Evidence
-     ↓
+      |
+      v
 Estimate Confidence
-     ↓
+      |
+      v
 Check Ambiguity / Conflicts
-     ↓
- ┌───────────────┬────────────────┐
- │ High Confidence│ Low Confidence │
- │ Auto-Classify │ Human Review   │
- └───────────────┴────────────────┘
-     ↓
-Structured JSON / CSV Output
+      |
+      +--------------------------+
+      |                          |
+      v                          v
+High Confidence            Low Confidence
+      |                          |
+      v                          v
+Auto-Classify              Human Review
+      |                          |
+      +------------+-------------+
+                   |
+                   v
+          Structured JSON / CSV
+```
 
-13. Agentic Workflow
+---
+
+## 13. Agentic Workflow
+
 A complex multi-agent architecture is not required for the initial system.
-The proposed solution will use a focused reasoning pipeline consisting of:
-1. Transaction understanding
-2. Voucher classification
-3. Evidence extraction
-4. Confidence assessment
-5. Validation
-This keeps the architecture technically meaningful while remaining feasible within the final hackathon.
-14. Technology Stack
-Layer	Technology
-AI Model	Qwen2.5-7B-Instruct
-Backend	Python, FastAPI
-Data Processing	Pandas
-Frontend	React
-Evaluation	Scikit-learn
-Input	Excel (.xlsx)
-Output	JSON / CSV
-Optimization	Quantization / efficient inference
-Deployment	Docker / Cloud
-Version Control	GitHub
 
+The proposed solution will use a focused AI reasoning pipeline consisting of:
 
-15. Expected Features
-Core Features
+1. **Transaction Understanding**  
+   Analyze available transaction fields and their relationships.
+
+2. **Voucher Classification**  
+   Predict the most appropriate voucher category.
+
+3. **Evidence Extraction**  
+   Identify the transaction fields supporting the prediction.
+
+4. **Confidence Assessment**  
+   Estimate the certainty of the classification.
+
+5. **Conflict Detection**  
+   Identify competing or ambiguous voucher categories.
+
+6. **Validation**  
+   Verify the prediction and structured output.
+
+7. **Human Review**  
+   Route low-confidence or ambiguous transactions for verification.
+
+This focused workflow keeps the architecture technically meaningful while remaining feasible within the final hackathon.
+
+---
+
+## 14. Technology Stack
+
+| Layer | Technology |
+|---|---|
+| AI Model | Qwen2.5-7B-Instruct |
+| Backend | Python, FastAPI |
+| Data Processing | Pandas |
+| Frontend | React |
+| Evaluation | Scikit-learn |
+| Input | Excel (.xlsx) |
+| Output | JSON / CSV |
+| Optimization | Quantization / Efficient Inference |
+| Deployment | Docker / Cloud |
+| Version Control | GitHub |
+
+---
+
+## 15. Expected Features
+
+### Core Features
+
 - Excel transaction upload
 - Batch transaction processing
 - Automatic voucher classification
 - Multi-field transaction reasoning
-- Support for all required voucher categories
+- Support for required voucher categories
 - Structured JSON/CSV output
-Advanced Features
+
+### Advanced Features
+
 - Evidence-backed predictions
 - Confidence scoring
 - Ambiguity detection
@@ -262,38 +421,103 @@ Advanced Features
 - Human-review routing
 - Input-grounded explanations
 - Batch evaluation
-- Confusion matrix and error analysis
-The official challenge defines a broad set of voucher categories and expects the system to handle semantically similar transaction types. Hacktober_Fest_4_Problem_Statem…
-16. Implementation Approach
-Phase 1 — Data Preparation
+- Confusion matrix
+- Category-wise performance analysis
+- Error analysis
+
+### Key Differentiation
+
+Unlike a simple:
+
+```text
+Excel → LLM → Voucher
+```
+
+pipeline, IntelliVoucher AI will provide:
+
+```text
+Transaction Context
+        |
+        v
+AI Reasoning
+        |
+        v
+Voucher Prediction
+        |
+        +----> Supporting Evidence
+        |
+        +----> Confidence
+        |
+        +----> Alternative Category
+        |
+        v
+Validation
+        |
+        +----> High Confidence → Auto-Classify
+        |
+        +----> Low Confidence → Human Review
+```
+
+The goal is to make the system **evidence-backed, explainable and uncertainty-aware**, rather than treating every AI prediction as automatically correct.
+
+---
+
+## 16. Implementation Approach
+
+### Phase 1 — Data Preparation
+
 - Load the provided Excel dataset.
 - Validate available fields.
 - Normalize transaction values.
-Phase 2 — Context Construction
+- Handle missing information.
+
+### Phase 2 — Context Construction
+
 - Identify relevant transaction attributes.
-- Build a standardized AI-ready transaction representation.
-Phase 3 — AI Reasoning
-- Pass transaction context to the open-source LLM.
+- Build a standardized transaction representation.
+- Preserve relationships between important fields.
+
+### Phase 3 — AI Reasoning
+
+- Provide the structured transaction context to the open-source LLM.
 - Generate a constrained voucher classification.
-Phase 4 — Evidence & Confidence
-- Identify supporting input fields.
-- Estimate prediction confidence.
-- Detect competing or ambiguous categories.
-Phase 5 — Validation
-- Validate predicted categories.
-- Check structured output.
-- Route uncertain records for human review.
-Phase 6 — Evaluation
+- Compare relevant competing categories where necessary.
+
+### Phase 4 — Evidence and Confidence
+
+- Identify supporting transaction fields.
+- Generate a confidence estimate.
+- Detect ambiguous or conflicting cases.
+
+### Phase 5 — Validation
+
+- Validate the predicted voucher category.
+- Validate the structured output.
+- Check evidence against the original transaction fields.
+- Route uncertain transactions for human review.
+
+### Phase 6 — Evaluation
+
 - Test using previously unseen records.
-- Generate classification metrics.
-- Perform category-wise error analysis.
-Phase 7 — User Interface
+- Calculate classification metrics.
+- Generate category-wise performance.
+- Analyze incorrect and ambiguous predictions.
+
+### Phase 7 — User Interface
+
 - Provide dataset upload.
-- Display classifications.
-- Highlight uncertain transactions.
-- Allow result export.
-17. Expected Final Output
-High-Confidence Transaction
+- Display predictions.
+- Highlight low-confidence transactions.
+- Display evidence and confidence.
+- Export structured results.
+
+---
+
+## 17. Expected Final Output
+
+### High-Confidence Classification
+
+```json
 {
   "invoice_number": "INV-2026-1042",
   "voucher_type": "Purchase",
@@ -305,8 +529,11 @@ High-Confidence Transaction
   ],
   "review_required": false
 }
+```
 
-Ambiguous Transaction
+### Ambiguous Classification
+
+```json
 {
   "invoice_number": "INV-2026-1088",
   "voucher_type": "Purchase",
@@ -314,39 +541,74 @@ Ambiguous Transaction
   "alternative_category": "Expense",
   "review_required": true
 }
+```
 
-The official challenge specifies transaction/invoice identification and voucher type as the minimum output, while confidence and explanation may additionally be provided. Hacktober_Fest_4_Problem_Statem…
-18. Future Scope / Scalability
+The output will be machine-readable and suitable for programmatic evaluation and potential downstream accounting workflows.
+
+---
+
+## 18. Future Scope / Scalability
+
 The proposed architecture can be extended to:
-- ERP/accounting system integration
+
+- ERP and accounting-system integration
 - Automated voucher creation
 - Real-time transaction classification
 - Human-in-the-loop learning
-- Domain-specific fine-tuning
-- LoRA/QLoRA adaptation
+- Domain-specific model fine-tuning
+- LoRA / QLoRA adaptation
 - Continuous model evaluation
-- Large-scale batch processing
+- Large-scale transaction processing
 - Additional financial document workflows
-19. Open-Source Dependencies / Components
+- Integration with automated accounting pipelines
+
+---
+
+## 19. Open-Source Dependencies / Components
+
 The proposed implementation will use appropriately licensed open-source/open-weight components, including:
-- Qwen2.5-7B-Instruct
-- Python
-- Pandas
-- FastAPI
-- Scikit-learn
-- React
-- Open-source inference/optimization libraries
-- Git/GitHub tooling
-Exact versions, licenses and configurations will be documented in the final implementation.
-20. Expected Challenges and Mitigation
-Challenge	Proposed Mitigation
-Purchase vs Sales	Multi-field contextual reasoning
-Purchase Return vs Sales Return	Relationship and transaction-direction analysis
-Payment vs Receipt	Party and payment-context analysis
-Journal vs conventional transactions	Full transaction-context evaluation
-Missing fields	Robust context construction
-Ambiguous transactions	Confidence scoring + human review
-Incorrect AI output	Structured output validation
-Unsupported explanations	Evidence restricted to provided transaction fields
-Model latency	Quantization and optimized inference
-Category imbalance	Per-category metrics and error analysis
+
+- **Qwen2.5-7B-Instruct**
+- **Python**
+- **Pandas**
+- **FastAPI**
+- **Scikit-learn**
+- **React**
+- Open-source inference and optimization libraries
+- Git and GitHub tooling
+
+Exact versions, licenses and model configurations will be documented during the final implementation.
+
+---
+
+## 20. Expected Challenges and Mitigation
+
+| Challenge | Proposed Mitigation |
+|---|---|
+| Purchase vs Sales | Multi-field contextual reasoning |
+| Purchase Return vs Sales Return | Transaction-direction and relationship analysis |
+| Payment vs Receipt | Party and payment-context analysis |
+| Journal vs conventional transactions | Full transaction-context evaluation |
+| Missing transaction fields | Robust context construction |
+| Ambiguous transactions | Confidence scoring and human review |
+| Incorrect AI output | Structured output validation |
+| Unsupported explanations | Evidence restricted to provided transaction fields |
+| Model hallucination | Input-grounded evidence validation |
+| Model latency | Quantization and optimized inference |
+| Category imbalance | Per-category metrics and error analysis |
+| Misclassification | Confusion matrix and systematic error analysis |
+
+### Evaluation Strategy
+
+The system will be evaluated using:
+
+- **Accuracy**
+- **Precision**
+- **Recall**
+- **F1-score**
+- **Per-category performance**
+- **Ambiguous-case performance**
+- **Confusion matrix**
+- **Inference time**
+
+The evaluation will be performed on previously unseen records wherever the provided dataset permits, enabling reproducible assessment of the classifier.
