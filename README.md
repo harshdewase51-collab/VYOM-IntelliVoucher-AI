@@ -136,50 +136,48 @@ AI Output
 - Confidence score
 - Review requirement
 The AI will specifically address difficult distinctions such as Purchase vs Sales, Purchase Return vs Sales Return, Payment vs Receipt, Journal vs conventional transactions, and Import vs Export. Hacktober_Fest_4_Problem_Statem…
-10. System Architecture
-┌──────────────────────────────┐
-│   Structured Excel Dataset   │
-└──────────────┬───────────────┘
-               ↓
-┌──────────────────────────────┐
-│ Data Cleaning & Validation   │
-└──────────────┬───────────────┘
-               ↓
-┌──────────────────────────────┐
-│ Transaction Context Builder  │
-└──────────────┬───────────────┘
-               ↓
-┌──────────────────────────────┐
-│ Qwen2.5-7B-Instruct          │
-│ Contextual Reasoning Engine  │
-└──────────────┬───────────────┘
-               ↓
-┌──────────────────────────────┐
-│ Voucher Classification       │
-└──────────────┬───────────────┘
-               ↓
-      ┌────────┴─────────┐
-      ↓                  ↓
- Evidence Extraction   Alternative
-      ↓                Category Check
-      └────────┬─────────┘
-               ↓
-┌──────────────────────────────┐
-│ Confidence & Uncertainty     │
-│ Assessment                   │
-└──────────────┬───────────────┘
-               ↓
-       ┌───────┴────────┐
-       ↓                ↓
- High Confidence    Low Confidence
-       ↓                ↓
- Auto Classification Human Review
-       └────────┬───────┘
-                ↓
-┌──────────────────────────────┐
-│ Validation & Structured      │
-│ Output Generation            │
-└──────────────────────────────┘
+## 10. System Architecture
+
+## 10. System Architecture
+
+```text
+Structured Excel Dataset
+          |
+          v
+Data Cleaning & Validation
+          |
+          v
+Transaction Context Builder
+          |
+          v
+Qwen2.5-7B-Instruct
+(Contextual Reasoning Engine)
+          |
+          v
+Voucher Classification
+          |
+          v
+Evidence Extraction
+          |
+          v
+Confidence & Uncertainty Assessment
+          |
+          +----------------------+
+          |                      |
+          v                      v
+   High Confidence         Low Confidence
+          |                      |
+          v                      v
+   Auto Classification      Human Review
+          |                      |
+          +----------+-----------+
+                     |
+                     v
+          Validation & Output
+              Generation
+                     |
+                     v
+            JSON / CSV Output
 
 11. Component-Level Architecture
 Component	Responsibility
